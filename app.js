@@ -74,7 +74,7 @@ app.patch("/wisesayings/:id", async (req, res) => {
   });
 });
 
-// 랜덤 조회
+// 랜덤 조회 및 조회수 추가
 app.get("/wisesayings/random", async (req, res) => {
   const [[wiseSayingRow]] = await pool.query(
     `
@@ -98,7 +98,7 @@ app.get("/wisesayings/random", async (req, res) => {
   await pool.query(
     `
     UPDATE wisesaying
-    SET hitCount = hitCount + 1
+    SET hitCount = ?
     WHERE id = ?
     `,
     [wiseSayingRow.hitCount, wiseSayingRow.id]
